@@ -1,0 +1,110 @@
+#!/bin/sh
+
+append_to_bash_profile() {
+    echo "$1" >> ~/.bash_profile
+}
+
+echo_info() {
+  echo -e "\x1b[1;34m[S] First Boot: $1\e[0m"
+}
+
+echo_success() {
+  echo -e "\x1b[1;32m[S] First Boot: $1\e[0m"
+}
+
+if ! command -v xcode-select >/dev/null; then
+    echo "Looks like we need to install xcode cli tools..."
+
+    xcode-select --install
+fi
+
+if ! command -v brew >/dev/null; then
+    echo "Installing Homebrew ..."
+
+    curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+fi
+
+brew tap caskroom/cask
+
+# Programs
+
+echo "Lets install some software..."
+
+brew cask install virtualbox
+brew cask install slack
+brew cask install lastpass
+brew cask install sequel-pro
+brew cask install google-chrome
+brew cask install firefox
+brew cask install docker
+brew cask install vagrant
+
+# Languages
+
+echo "Lets add some language, but first some version managers..."
+
+brew install rbenv
+brew install ruby-build
+
+# shellcheck disable=SC2016
+append_to_bash_profile 'eval "$(rbenv init -)"'
+
+brew install nvm
+brew install npm
+
+mkdir -p ~/.nvm
+
+# shellcheck disable=SC2016
+append_to_bash_profile 'export NVM_DIR="$HOME/.nvm"'
+# shellcheck disable=SC2016
+append_to_bash_profile '  . "$(brew --prefix nvm)/nvm.sh"'
+
+echo 'Setting up Ruby'
+
+find_latest_ruby() {
+  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
+}
+
+ruby_version="$(find_latest_ruby)"
+
+rbenv install -s "$ruby_version"
+
+echo 'Refreshing...'
+
+source ~/.bash_profile
+
+echo 'Lets set up Vagrant now'
+
+cd ~ || exit
+
+git clone https://github.com/laravel/homestead.git Homestead
+
+cd ./Homestead || exit
+
+init.sh
+
+echo "$ruby_version" >> .ruby-version
+
+gem install bundler
+gem install librarian
+gem install librarian-chef
+
+echo 'Installing Chef recipies'
+
+librarian-chef install
+
+echo 'Installing vagrant-omnibus'
+
+vagrant plugin install vagrant-omnibus
+
+echo 'Provisioning vagrant'
+
+vagrant up
+
+vagrant provision
+
+echo 'Just need to finalize Lastpass'
+cd /usr/local/Caskroom/lastpass/latest/
+open Lastpass\ Installer.app
+
+echo 'Now your good to go! And welcome to Jiminny'
