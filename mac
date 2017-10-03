@@ -1,4 +1,5 @@
 #!/bin/sh
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 append_to_bash_profile() {
     echo "$1" >> ~/.bash_profile
@@ -24,6 +25,9 @@ if ! command -v brew >/dev/null; then
     curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 fi
 
+brew install node
+brew install ffmpeg
+
 brew tap caskroom/cask
 
 # Programs
@@ -32,22 +36,20 @@ echo "Lets install some software..."
 
 brew cask install virtualbox
 brew cask install slack
-brew cask install lastpass
+brew cask install 1password
 brew cask install sequel-pro
 brew cask install google-chrome
 brew cask install firefox
 brew cask install docker
 brew cask install vagrant
+brew cask install sublime-text
+brew cask install webstorm
+brew cask install phpstorm
+brew cask install tower
 
 # Languages
 
 echo "Lets add some language, but first some version managers..."
-
-brew install rbenv
-brew install ruby-build
-
-# shellcheck disable=SC2016
-append_to_bash_profile 'eval "$(rbenv init -)"'
 
 brew install nvm
 brew install npm
@@ -59,16 +61,6 @@ append_to_bash_profile 'export NVM_DIR="$HOME/.nvm"'
 # shellcheck disable=SC2016
 append_to_bash_profile '  . "$(brew --prefix nvm)/nvm.sh"'
 
-echo 'Setting up Ruby'
-
-find_latest_ruby() {
-  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
-}
-
-ruby_version="$(find_latest_ruby)"
-
-rbenv install -s "$ruby_version"
-
 echo 'Refreshing...'
 
 source ~/.bash_profile
@@ -77,34 +69,22 @@ echo 'Lets set up Vagrant now'
 
 cd ~ || exit
 
-git clone https://github.com/laravel/homestead.git Homestead
+### Install Vagrant & VirtualBox & Homestead
 
-cd ./Homestead || exit
+vagrant box add laravel/homestead
+cd Code
+git clone https://github.com/laravel/homestead Homestead
+cd Homestead
+bash init.sh
+subl ~/.homestead/Homestead.yaml
 
-init.sh
+# Add to .bash_profile or .zshrc - for easy access to vagrant up
+alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
 
-echo "$ruby_version" >> .ruby-version
+# When changing homestead.yaml file do provision to update settings in vagrant:
+homestead provision
 
-gem install bundler
-gem install librarian
-gem install librarian-chef
-
-echo 'Installing Chef recipies'
-
-librarian-chef install
-
-echo 'Installing vagrant-omnibus'
-
-vagrant plugin install vagrant-omnibus
-
-echo 'Provisioning vagrant'
-
-vagrant up
-
-vagrant provision
-
-echo 'Just need to finalize Lastpass'
-cd /usr/local/Caskroom/lastpass/latest/
-open Lastpass\ Installer.app
+start homestead up
+stop homestead halt
 
 echo 'Now your good to go! And welcome to Jiminny'
