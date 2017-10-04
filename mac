@@ -46,6 +46,7 @@ brew cask install sublime-text
 brew cask install webstorm
 brew cask install phpstorm
 brew cask install tower
+brew cask install ngrok
 
 # Languages
 
