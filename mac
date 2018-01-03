@@ -39,7 +39,7 @@ brew bundle --file=- <<EOF
 tap "homebrew/services"
 tap "caskroom/cask"
 
-brew "node"
+brew "npm"
 brew "ffmpeg"
 
 cask "virtualbox"
@@ -47,7 +47,7 @@ cask "slack"
 cask "skype"
 cask "1password"
 cask "sequel-pro"
-cask "google-drive"
+cask "google-drive-file-stream"
 cask "google-chrome"
 cask "firefox"
 cask "docker"
@@ -60,19 +60,6 @@ cask "tower"
 cask "ngrok"
 
 EOF
-
-# Languages
-fancy_echo "Lets add some language, but first some version managers..."
-
-brew install nvm
-brew install npm
-
-mkdir -p ~/.nvm
-
-# shellcheck disable=SC2016
-append_to_bash_profile 'export NVM_DIR="$HOME/.nvm"'
-# shellcheck disable=SC2016
-append_to_bash_profile '  . "$(brew --prefix nvm)/nvm.sh"'
 
 fancy_echo 'Refreshing...'
 
