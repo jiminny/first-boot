@@ -27,39 +27,39 @@ if ! command -v brew >/dev/null; then
 fi
 
 if brew list | grep -Fq brew-cask; then
-  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  fancy_echo "Uninstalling old Homebrew-Cask..."
   
   brew uninstall --force brew-cask
 fi
 
-fancy_echo "Updating Homebrew formulae ..."
+fancy_echo "Updating Homebrew formulae and installing software..."
 
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 tap "homebrew/services"
 tap "caskroom/cask"
 
-# Programs
-fancy_echo "Lets install some software..."
+brew "node"
+brew "ffmpeg"
 
-brew install node
-brew install ffmpeg
-brew cask install virtualbox
-brew cask install slack
-brew cask install skype
-brew cask install 1password
-brew cask install sequel-pro
-brew cask install google-drive
-brew cask install google-chrome
-brew cask install firefox
-brew cask install docker
-brew cask install vagrant
-brew cask install sublime-text
-brew cask install webstorm
-brew cask install phpstorm
-brew cask install pycharm
-brew cask install tower
-brew cask install ngrok
+cask "virtualbox"
+cask "slack"
+cask "skype"
+cask "1password"
+cask "sequel-pro
+cask "google-drive
+cask "google-chrome
+cask "firefox
+cask "docker
+cask "vagrant"
+cask "sublime-text"
+cask "webstorm"
+cask "phpstorm"
+cask "pycharm"
+cask "tower"
+cask "ngrok"
+
+EOF
 
 # Languages
 fancy_echo "Lets add some language, but first some version managers..."
