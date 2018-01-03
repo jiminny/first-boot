@@ -71,10 +71,10 @@ cd ~ || exit
 
 ### Install Vagrant & VirtualBox & Homestead
 
-vagrant box add laravel/homestead
-cd Code
+vagrant box add laravel/homestead --provider virtualbox
+cd Code || exit
 git clone https://github.com/laravel/homestead Homestead
-cd Homestead
+cd Homestead || exit
 bash init.sh
 subl ~/.homestead/Homestead.yaml
 
