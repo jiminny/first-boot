@@ -36,8 +36,10 @@ echo "Lets install some software..."
 
 brew cask install virtualbox
 brew cask install slack
+brew cask install skype
 brew cask install 1password
 brew cask install sequel-pro
+brew cask install google-drive
 brew cask install google-chrome
 brew cask install firefox
 brew cask install docker
@@ -45,6 +47,7 @@ brew cask install vagrant
 brew cask install sublime-text
 brew cask install webstorm
 brew cask install phpstorm
+brew cask install pycharm
 brew cask install tower
 brew cask install ngrok
 
@@ -88,4 +91,4 @@ homestead provision
 start homestead up
 stop homestead halt
 
-echo 'Now your good to go! And welcome to Jiminny'
+echo 'Now you\'re good to go! And welcome to Jiminny'
