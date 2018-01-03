@@ -100,4 +100,4 @@ homestead provision
 start homestead up
 stop homestead halt
 
-fancy_echo Now you're good to go! And welcome to Jiminny"
+fancy_echo "Now you're good to go! And welcome to Jiminny"
