@@ -1,39 +1,49 @@
 #!/bin/sh
+
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 append_to_bash_profile() {
-    echo "$1" >> ~/.bash_profile
+  echo "$1" >> ~/.bash_profile
 }
 
-echo_info() {
-  echo -e "\x1b[1;34m[S] First Boot: $1\e[0m"
-}
+fancy_echo() {
+  local fmt="$1"; shift
 
-echo_success() {
-  echo -e "\x1b[1;32m[S] First Boot: $1\e[0m"
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
 }
 
 if ! command -v xcode-select >/dev/null; then
-    echo "Looks like we need to install xcode cli tools..."
-
-    xcode-select --install
+  fancy_echo "Looks like we need to install xcode cli tools..."
+  
+  xcode-select --install
 fi
 
 if ! command -v brew >/dev/null; then
-    echo "Installing Homebrew ..."
+  fancy_echo "Installing Homebrew ..."
 
-    curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+  curl -fsS \
+    'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 fi
+
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  
+  brew uninstall --force brew-cask
+fi
+
+fancy_echo "Updating Homebrew formulae ..."
+
+brew update --force # https://github.com/Homebrew/brew/issues/1151
+brew bundle --file=- <<EOF
+tap "homebrew/services"
+tap "caskroom/cask"
+
+# Programs
+fancy_echo "Lets install some software..."
 
 brew install node
 brew install ffmpeg
-
-brew tap caskroom/cask
-
-# Programs
-
-echo "Lets install some software..."
-
 brew cask install virtualbox
 brew cask install slack
 brew cask install skype
@@ -52,8 +62,7 @@ brew cask install tower
 brew cask install ngrok
 
 # Languages
-
-echo "Lets add some language, but first some version managers..."
+fancy_echo "Lets add some language, but first some version managers..."
 
 brew install nvm
 brew install npm
@@ -65,11 +74,11 @@ append_to_bash_profile 'export NVM_DIR="$HOME/.nvm"'
 # shellcheck disable=SC2016
 append_to_bash_profile '  . "$(brew --prefix nvm)/nvm.sh"'
 
-echo 'Refreshing...'
+fancy_echo 'Refreshing...'
 
 source ~/.bash_profile
 
-echo 'Lets set up Vagrant now'
+fancy_echo 'Lets set up Vagrant now'
 
 cd ~ || exit
 
@@ -91,4 +100,4 @@ homestead provision
 start homestead up
 stop homestead halt
 
-echo 'Now you\'re good to go! And welcome to Jiminny'
+fancy_echo 'Now you\'re good to go! And welcome to Jiminny'
