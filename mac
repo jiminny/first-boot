@@ -46,11 +46,11 @@ cask "virtualbox"
 cask "slack"
 cask "skype"
 cask "1password"
-cask "sequel-pro
-cask "google-drive
-cask "google-chrome
-cask "firefox
-cask "docker
+cask "sequel-pro"
+cask "google-drive"
+cask "google-chrome"
+cask "firefox"
+cask "docker"
 cask "vagrant"
 cask "sublime-text"
 cask "webstorm"
@@ -100,4 +100,4 @@ homestead provision
 start homestead up
 stop homestead halt
 
-fancy_echo 'Now you'\''re good to go! And welcome to Jiminny'
+fancy_echo Now you're good to go! And welcome to Jiminny"
