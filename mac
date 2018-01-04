@@ -9,7 +9,7 @@ append_to_bash_profile() {
 fancy_echo() {
   local fmt="$1"; shift
 
-  # shellcheck disable=SC1117
+  # shellcheck disable=SC1117,SC2059
   printf "\n$fmt\n" "$@"
 }
 
@@ -80,7 +80,6 @@ cd ~ || exit
 vagrant box add laravel/homestead --provider virtualbox
 
 git clone https://github.com/laravel/homestead Homestead
-git checkout v7.0.1
 
 cd Homestead || exit
 bash init.sh
