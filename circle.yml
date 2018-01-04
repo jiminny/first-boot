@@ -3,8 +3,6 @@ dependencies:
     - brew install shellcheck
 
 machine:
-  ruby:
-    version: "2.4.1"
   xcode:
     version: "9.2"
 
