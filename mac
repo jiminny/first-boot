@@ -61,10 +61,6 @@ cask "ngrok"
 
 EOF
 
-fancy_echo 'Refreshing...'
-
-source ~/.bash_profile
-
 fancy_echo 'Lets set up Vagrant now'
 
 cd ~ || exit
@@ -74,17 +70,11 @@ cd ~ || exit
 vagrant box add laravel/homestead --provider virtualbox
 
 git clone https://github.com/laravel/homestead Homestead
+git checkout v7.0.1
+
 cd Homestead || exit
 bash init.sh
-subl ~/.homestead/Homestead.yaml
+subl Homestead.yaml
 
-# Add to .bash_profile or .zshrc - for easy access to vagrant up
-alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
-
-# When changing homestead.yaml file do provision to update settings in vagrant:
-homestead provision
-
-start homestead up
-stop homestead halt
 
 fancy_echo "Now you're good to go! And welcome to Jiminny"
