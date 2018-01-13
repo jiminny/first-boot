@@ -44,7 +44,6 @@ brew "docker"
 brew "ffmpeg"
 brew "media-info"
 brew "npm"
-brew "selenium-server-standalone"
 
 cask "1password"
 cask "browserstacklocal"
