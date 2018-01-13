@@ -39,11 +39,14 @@ brew bundle --file=- <<EOF
 tap "homebrew/services"
 tap "caskroom/cask"
 
-brew "npm"
+brew "chromedriver"
 brew "ffmpeg"
 brew "media-info"
+brew "npm"
+brew "selenium-server-standalone"
 
 cask "1password"
+case "browserstacklocal"
 cask "docker"
 cask "evernote"
 cask "firefox"
@@ -68,6 +71,7 @@ cask "suspicious-package"
 cask "tower"
 cask "vagrant"
 cask "virtualbox"
+cask "vlc"
 cask "webstorm"
 
 EOF
