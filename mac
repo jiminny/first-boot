@@ -45,6 +45,7 @@ brew "ffmpeg"
 brew "media-info"
 brew "npm"
 brew "yarn"
+brew "awscli"
 
 cask "1password"
 cask "browserstacklocal"
