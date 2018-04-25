@@ -39,7 +39,6 @@ brew bundle --file=- <<EOF
 tap "homebrew/services"
 tap "caskroom/cask"
 
-brew "chromedriver"
 brew "docker"
 brew "ffmpeg"
 brew "media-info"
