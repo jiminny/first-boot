@@ -68,26 +68,10 @@ cask "skype"
 cask "sublime-text"
 cask "suspicious-package"
 cask "tower"
-cask "vagrant"
 cask "virtualbox"
 cask "vlc"
 cask "webstorm"
 
 EOF
-
-fancy_echo 'Lets set up Vagrant now'
-
-cd ~ || exit
-
-### Install Vagrant & VirtualBox & Homestead
-if [ ! -d "Homestead" ]; then
-  vagrant box add laravel/homestead --provider virtualbox
-
-  git clone https://github.com/laravel/homestead Homestead
-
-  cd Homestead || exit
-  bash init.sh
-  subl Homestead.yaml
-fi
 
 fancy_echo "Now you're good to go! And welcome to Jiminny"
